@@ -5,10 +5,11 @@
 import uuid
 from datetime import datetime
 import models
-from sqlalchemy import Stringi, DateTime
+from sqlalchemy import String, DateTime, Column
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
 
 class BaseModel:
     '''
@@ -17,7 +18,7 @@ class BaseModel:
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    
+
     def __init__(self, *args, **kwargs):
         '''
             Initialize public instance attributes.
