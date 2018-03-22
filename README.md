@@ -52,5 +52,5 @@ from the root directory.
 
 ## Bugs
 
-+ Coming soon
++ Coming Soon
 
