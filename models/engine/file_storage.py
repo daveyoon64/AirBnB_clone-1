@@ -18,13 +18,6 @@ class FileStorage:
             Return the dictionary
         '''
         return self.__objects
-        '''
-        return_value = {}
-        for key, value in self.__objects.items():
-            if type(value) is cls:
-                return_value[key] = value
-        return return_value
-        '''
 
     def new(self, obj):
         '''
@@ -65,7 +58,10 @@ class FileStorage:
         '''
             To delete obj from __objects if it’s inside
         '''
+        if obj is None:
+            return
         for key, value in (FileStorage.__objects).items():
             if value is obj:
                 to_del_key = key
         del (FileStorage.__objects)[to_del_key]
+        self.save()
