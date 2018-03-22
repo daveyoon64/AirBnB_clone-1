@@ -45,13 +45,10 @@ class HBNBCommand(cmd.Cmd):
         try:
             args = args.split(" ")
             new_instance = eval(args[0])()
-            print(type(new_instance))
-            
-            print("args:---->{}".format(args))
             for i in range(1, len(args)):
                 if "=" in args[i]:
                     arg_list = args[i].split("=")
-                    if arg_list[i][0] == "\"":
+                    if arg_list[1][0] == "\"":
                         to_validate_value = arg_list[1][1:-1]
                         validated_value = to_validate_value.replace('"', r'\"')
                         validated_value = validated_value.replace("'", r"\'")
@@ -60,14 +57,12 @@ class HBNBCommand(cmd.Cmd):
                         if "." in arg_list[1]:
                             try:
                                 validated_value = float(arg_list[1])
-                            except:
-                                print("line 64")
+                            except Exception:
                                 pass
                         else:
                             try:
                                 validated_value = int(arg_list[1])
-                            except:
-                                print("line 70")
+                            except Exception:
                                 pass
                     if hasattr(new_instance, arg_list[0]):
                         setattr(new_instance, arg_list[0], validated_value)
@@ -75,8 +70,7 @@ class HBNBCommand(cmd.Cmd):
                     pass
             new_instance.save()
             print(new_instance.id)
-            
-        except:
+        except Exception as e:
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -241,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
             cmd_arg = args[0] + " " + args[2]
             func = functions[args[1]]
             func(cmd_arg)
-        except:
+        except Exception:
             print("*** Unknown syntax:", args[0])
 
 
