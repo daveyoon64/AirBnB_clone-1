@@ -35,13 +35,6 @@ class BaseModel:
         '''
         return ("[{}] ({}) {}".format(self.__class__.__name__,
                                       self.id, self.__dict__))
-    '''
-    def __repr__(self):
-            Return string representation of BaseModel class
-        print("------------>REPR---------")
-        return ("[{}] ({}) {}".format(self.__class__.__name__,
-                                      self.id, self.__dict__))
-    '''
 
     def save(self):
         '''
