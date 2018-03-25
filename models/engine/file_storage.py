@@ -17,21 +17,11 @@ class FileStorage:
         '''
             Return the dictionary
         '''
-        #return self.__objects
-        '''
+        return_value = {}
         for key, value in self.__objects.items():
-            if type(value) is cls: 
-                print("key---->{}".format(key))
-                print("value---->{}".format(value))
-                print("returning value")
-                return (value)
-        '''
-        '''
-        #for objects in self.__objects.items():
-            #return objects
-        print("__objects")
-        print (self.__objects)
-        '''
+            if type(value) is cls:
+                return_value[key] = value
+        return return_value
 
     def new(self, obj):
         '''
