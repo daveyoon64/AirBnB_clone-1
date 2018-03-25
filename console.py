@@ -43,11 +43,39 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args)
+            args = args.split(" ")
             new_instance = eval(args[0])()
+            print(type(new_instance))
+            
+            print("args:---->{}".format(args))
+            for i in range(1, len(args)):
+                if "=" in args[i]:
+                    arg_list = args[i].split("=")
+                    if arg_list[i][0] == "\"":
+                        to_validate_value = arg_list[1][1:-1]
+                        validated_value = to_validate_value.replace('"', r'\"')
+                        validated_value = validated_value.replace("'", r"\'")
+                        validated_value = validated_value.replace("_", r" ")
+                    else:
+                        if "." in arg_list[1]:
+                            try:
+                                validated_value = float(arg_list[1])
+                            except:
+                                print("line 64")
+                                pass
+                        else:
+                            try:
+                                validated_value = int(arg_list[1])
+                            except:
+                                print("line 70")
+                                pass
+                    if hasattr(new_instance, arg_list[0]):
+                        setattr(new_instance, arg_list[0], validated_value)
+                else:
+                    pass
             new_instance.save()
             print(new_instance.id)
-
+            
         except:
             print("** class doesn't exist **")
 
