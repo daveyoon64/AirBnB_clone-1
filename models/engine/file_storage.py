@@ -17,7 +17,11 @@ class FileStorage:
         '''
             Return the dictionary
         '''
-        return self.__objects
+        match = {}
+        for k, v in self.__objects.items():
+            if type(v) == cls:
+                match[k] = v
+        return match
 
     def new(self, obj):
         '''
