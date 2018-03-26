@@ -4,6 +4,10 @@
 '''
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.ext.declarative import declarative_base 
+import os
+
+Base = declarative_base()
 
 
 class DBStorage:
@@ -18,17 +22,17 @@ class DBStorage:
             initialize DBStorage instance
         '''
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format
-                                      (os.env['HBNB_MYSQL_USER'],
-                                          os.env['HBNB_MYSQL_PWD'],
-                                          os.env['HBNB_MYSQL_HOST'],
-                                          os.env['HBNB_MYSQL_DB']),
+                                      (os.environ['HBNB_MYSQL_USER'],
+                                          os.environ['HBNB_MYSQL_PWD'],
+                                          os.environ['HBNB_MYSQL_HOST'],
+                                          os.environ['HBNB_MYSQL_DB']),
                                       pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
 
-        Session = sessionmaker(bind=engine)
+        Session = sessionmaker(bind=self.__engine)
         session = Session()
 
-        if os.env['HBNB_ENV'] == 'test':
+        if os.environ['HBNB_ENV'] == 'test':
             # DROP ALL tables
             Base.metadata.drop_all(self.__engine)
 
@@ -79,12 +83,12 @@ class DBStorage:
         from models.state import State
 
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format
-                                      (os.env['HBNB_MYSQL_USER'],
-                                       os.env['HBNB_MYSQL_PWD'],
-                                       os.env['HBNB_MYSQL_HOST'],
-                                       os.env['HBNB_MYSQL_DB']),
+                                      (os.environ['HBNB_MYSQL_USER'],
+                                       os.environ['HBNB_MYSQL_PWD'],
+                                       os.environ['HBNB_MYSQL_HOST'],
+                                       os.environ['HBNB_MYSQL_DB']),
                                       pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
 
-        Session = sessionmaker(bind=engine, expire_on_commit=False)
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         session = scoped_session(Session())
