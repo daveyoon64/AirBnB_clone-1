@@ -4,10 +4,29 @@
 '''
 
 from models.base_model import BaseModel
+from sqlalchemy import Column, String
+import os
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     '''
         Implementation for the State.
     '''
-    name = ""
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
+
+    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
+        cities = relationship("City", backref='state',
+                              cascade="all, delete, delete-orphan")
+    else:
+        @property
+        def cities(self):
+            '''
+            Code for FileStorage & returns list of cities
+            '''
+            match = []
+            all_cities = models.storage.all(City)
+            for k, v in all_cities.items():
+                if v.state_id == self.id:
+                    match.append(v)
+            return match
