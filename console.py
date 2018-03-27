@@ -5,7 +5,9 @@
 import cmd
 import json
 import shlex
+import os
 from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -56,12 +58,14 @@ class HBNBCommand(cmd.Cmd):
                         if "." in arg_list[1]:
                             try:
                                 validated_value = float(arg_list[1])
-                            except Exception:
+                            except Exception as e:
+                                print(e)
                                 pass
                         else:
                             try:
                                 validated_value = int(arg_list[1])
-                            except Exception:
+                            except Exception as e:
+                                print(e)
                                 pass
                     if hasattr(new_instance, arg_list[0]):
                         setattr(new_instance, arg_list[0], validated_value)
@@ -70,6 +74,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
+            print(e)
             print("** class doesn't exist **")
 
     def do_show(self, args):
@@ -134,23 +139,30 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name.
         '''
         obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
-        try:
-            if len(args) != 0:
-                eval(args)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        for key, val in objects.items():
-            if len(args) != 0:
-                if type(val) is eval(args):
+        if os.environ['HBNB_TYPE_STORAGE'] == 'file':
+            storage = FileStorage()
+            storage.reload()
+            objects = storage.all()
+            try:
+                if len(args) != 0:
+                    eval(args)
+            except NameError:
+                print("** class doesn't exist **")
+                return
+            for key, val in objects.items():
+                if len(args) != 0:
+                    if type(val) is eval(args):
+                        obj_list.append(val)
+                else:
                     obj_list.append(val)
-            else:
-                obj_list.append(val)
-
-        print(obj_list)
+            print(obj_list)
+        else:
+            queries = []
+            storage = DBStorage()
+            query = storage.all(args)
+            for k, v in query.items():
+                queries.append(v)
+            print(queries)
 
     def do_update(self, args):
         '''
