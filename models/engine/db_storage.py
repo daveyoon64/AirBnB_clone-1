@@ -6,6 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import Base
+from models.state import State
+from models.city import City
 import os
 
 
@@ -45,7 +47,10 @@ class DBStorage:
             result = session.query(User, State, City, Amentiy,
                                    Place, Review).all()
         else:
-            result = session.query(cls).all()
+            if cls == 'State':
+                result = session.query(State).all()
+            elif cls == 'City':
+                result = session.query(City).all()
         match = {}
         for element in result:
             key = "{}.{}".format(type(element), element.id)
@@ -82,9 +87,6 @@ class DBStorage:
         '''
           reload stuff
         '''
-        from models.city import City
-        from models.state import State
-
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format
                                       (os.environ['HBNB_MYSQL_USER'],
                                        os.environ['HBNB_MYSQL_PWD'],
