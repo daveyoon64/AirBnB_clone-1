@@ -19,7 +19,6 @@ class HBNBCommand(cmd.Cmd):
     '''
         Contains the entry point of the command interpreter.
     '''
-
     prompt = ("(hbnb) ")
 
     def do_quit(self, args):

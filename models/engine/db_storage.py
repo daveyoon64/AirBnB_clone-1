@@ -4,10 +4,9 @@
 '''
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.ext.declarative import declarative_base 
+from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import Base
 import os
-
-Base = declarative_base()
 
 
 class DBStorage:
@@ -40,7 +39,7 @@ class DBStorage:
         '''
             query current database session for all objects depending on cls.
         '''
-        Session = sessionmaker(bind=engine)
+        Session = sessionmaker(bind=self.__engine)
         session = Session()
         if cls is None:
             result = session.query(User, State, City, Amentiy,
@@ -57,7 +56,7 @@ class DBStorage:
         '''
             add object to current session.
         '''
-        Session = sessionmaker(bind=engine)
+        Session = sessionmaker(bind=self.__engine)
         session = Session()
         session.add(obj)
         session.commit()
@@ -66,12 +65,16 @@ class DBStorage:
         '''
             commit all changes to current session.
         '''
+        Session = sessionmaker(bind=self.__engine)
+        session = Session()
         session.commit()
 
     def delete(self, obj=None):
         '''
             delete from current sesssion
         '''
+        Session = sessionmaker(bind=self.__engine)
+        session = Session()
         session.delete(obj)
         session.commit()
 

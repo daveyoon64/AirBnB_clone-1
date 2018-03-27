@@ -2,11 +2,10 @@
 '''
     Define the class City.
 '''
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
 
 class City(BaseModel, Base):
     '''
