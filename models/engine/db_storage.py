@@ -59,6 +59,10 @@ class DBStorage:
                 result = session.query(State).all()
             elif cls == 'City':
                 result = session.query(City).all()
+            elif cls == 'User':
+                result = session.query(User).all()
+            elif cls == 'Place':
+                result = session.query(Place).all()
             for element in result:
                 key = "{}.{}".format(type(element), element.id)
                 match[key] = element
