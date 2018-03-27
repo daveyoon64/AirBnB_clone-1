@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         if os.environ['HBNB_TYPE_STORAGE'] == 'file':
             storage = FileStorage()
             storage.reload()
-            objects = storage.all()
+            objects = storage.all(args)
             try:
                 if len(args) != 0:
                     eval(args)
