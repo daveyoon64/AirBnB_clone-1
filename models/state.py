@@ -2,14 +2,12 @@
 '''
     Implementation of the State class
 '''
-
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship  
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import os
 
-Base = declarative_base()
 
 class State(BaseModel, Base):
     '''
