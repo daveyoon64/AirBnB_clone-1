@@ -39,23 +39,21 @@ class DBStorage:
             query current database session for all objects depending on cls.
         '''
         match = {}
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
         if not cls:
-            result = session.query(State, City).all()
+            result = self.__session.query(State, City).all()
             for element in result:
                 for obj in element:
                     key = "{}.{}".format(type(obj), obj.id)
                     match[key] = obj
         else:
             if cls == 'State':
-                result = session.query(State).all()
+                result = self.__session.query(State).all()
             elif cls == 'City':
-                result = session.query(City).all()
+                result = self.__ession.query(City).all()
             elif cls == 'User':
-                result = session.query(User).all()
+                result = self.__session.query(User).all()
             elif cls == 'Place':
-                result = session.query(Place).all()
+                result = self.__session.query(Place).all()
             for element in result:
                 key = "{}.{}".format(type(element), element.id)
                 match[key] = element
@@ -65,20 +63,20 @@ class DBStorage:
         '''
             add object to current session.
         '''
-        session.add(obj)
+        self.__session.add(obj)
 
     def save(self):
         '''
             commit all changes to current session.
         '''
-        session.commit()
+        self.__session.commit()
 
     def delete(self, obj=None):
         '''
             delete from current sesssion
         '''
         if obj:
-            session.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
         '''
