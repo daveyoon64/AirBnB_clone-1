@@ -2,9 +2,8 @@
 '''
     Define the class City.
 '''
-import os
-from models.base_model import BaseModel, Base
 from sqlalchemy import String, Column, ForeignKey
+from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 
 
@@ -16,5 +15,5 @@ class City(BaseModel, Base):
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
 
-    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
-        places = relationship('Place', backref='cities', cascade='delete')
+    places = relationship('Place', backref='cities',
+                          cascade='all, delete, delete-orphan')

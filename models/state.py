@@ -6,7 +6,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from models.city import City
 import os
 
 
@@ -18,7 +17,8 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     if os.environ['HBNB_TYPE_STORAGE'] == 'db':
-        cities = relationship("City", backref="state", cascade="delete")
+        cities = relationship("City", backref="state",
+                              cascade="delete")
     else:
         @property
         def cities(self):
