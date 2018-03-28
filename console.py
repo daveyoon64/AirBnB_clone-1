@@ -91,7 +91,6 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         storage = models.storage
-        storage.reload()
         obj_dict = storage.all()
         try:
             eval(args[0])
@@ -120,7 +119,6 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         class_id = args[1]
         storage = models.storage
-        storage.reload()
         obj_dict = storage.all()
         try:
             eval(class_name)
@@ -142,7 +140,6 @@ class HBNBCommand(cmd.Cmd):
         obj_list = []
         if os.environ['HBNB_TYPE_STORAGE'] == 'file':
             storage = models.storage
-            storage.reload()
             objects = storage.all(args)
             try:
                 if len(args) != 0:
@@ -171,7 +168,6 @@ class HBNBCommand(cmd.Cmd):
             sent as args.
         '''
         storage = models.storage
-        storage.reload()
         args = shlex.split(args)
         if len(args) == 0:
             print("** class name missing **")
@@ -217,7 +213,6 @@ class HBNBCommand(cmd.Cmd):
         '''
         obj_list = []
         storage = models.storage
-        storage.reload()
         objects = storage.all()
         try:
             if len(args) != 0:
