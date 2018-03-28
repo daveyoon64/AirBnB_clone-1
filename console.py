@@ -138,6 +138,30 @@ class HBNBCommand(cmd.Cmd):
             Prints all string representation of all instances
             based or not on the class name.
         '''
+        args = shlex.split(args)
+        obj_list = []
+        if os.environ['HBNB_TYPE_STORAGE'] == 'file':
+            fs = FileStorage()
+            fs.reload()
+        else:
+            db = DBStorage()
+            db.reload()
+        if len(args) != 0:
+            try:
+                eval(args[0])
+            except NameError:
+                print("** class doesn't exist **")
+                return
+            objects = storage.all(eval(args[0]))
+        else:
+            objects = storage.all()
+        print(objects)
+    """
+    def do_all(self, args):
+        '''
+            Prints all string representation of all instances
+            based or not on the class name.
+        '''
         obj_list = []
         if os.environ['HBNB_TYPE_STORAGE'] == 'file':
             storage = FileStorage()
@@ -163,7 +187,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in query.items():
                 queries.append(v)
             print(queries)
-
+    """
     def do_update(self, args):
         '''
             Update an instance based on the class name and id
