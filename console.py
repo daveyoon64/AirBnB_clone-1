@@ -141,11 +141,11 @@ class HBNBCommand(cmd.Cmd):
         args = shlex.split(args)
         obj_list = []
         if os.environ['HBNB_TYPE_STORAGE'] == 'file':
-            fs = FileStorage()
-            fs.reload()
+            storage = FileStorage()
+            storage.reload()
         else:
-            db = DBStorage()
-            db.reload()
+            storage = DBStorage()
+            storage.reload()
         if len(args) != 0:
             try:
                 eval(args[0])
