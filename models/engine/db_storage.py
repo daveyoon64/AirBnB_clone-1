@@ -9,7 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.user import User
-from sqlalchemy import create_engine
+from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
@@ -40,7 +40,7 @@ class DBStorage:
         '''
         match = []
         if not cls:
-            result = self.__session.query(State, City)
+            result = self.__session.query(City, State)
             for k, v in result:
                 match.append(k)
                 match.append(v)
