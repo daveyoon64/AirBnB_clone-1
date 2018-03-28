@@ -159,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj_list)
         else:
             queries = []
-            storage = DBStorage()
+            storage = models.storage
             query = storage.all(args)
             for k, v in query.items():
                 queries.append(v)

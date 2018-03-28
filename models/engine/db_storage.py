@@ -32,13 +32,7 @@ class DBStorage:
                                           os.environ['HBNB_MYSQL_HOST'],
                                           os.environ['HBNB_MYSQL_DB']),
                                       pool_pre_ping=True)
-        Base.metadata.create_all(self.__engine)
-
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
-
         if os.environ['HBNB_ENV'] == 'test':
-            # DROP ALL tables
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -46,23 +40,21 @@ class DBStorage:
             query current database session for all objects depending on cls.
         '''
         match = {}
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
         if not cls:
-            result = session.query(State, City).all()
+            result = self.__session.query(State, City).all()
             for element in result:
                 for obj in element:
                     key = "{}.{}".format(type(obj), obj.id)
                     match[key] = obj
         else:
             if cls == 'State':
-                result = session.query(State).all()
+                result = self.__session.query(State).all()
             elif cls == 'City':
-                result = session.query(City).all()
+                result = self.__session.query(City).all()
             elif cls == 'User':
-                result = session.query(User).all()
+                result = self.__session.query(User).all()
             elif cls == 'Place':
-                result = session.query(Place).all()
+                result = self.__session.query(Place).all()
             for element in result:
                 key = "{}.{}".format(type(element), element.id)
                 match[key] = element
@@ -72,39 +64,30 @@ class DBStorage:
         '''
             add object to current session.
         '''
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
-        session.add(obj)
-        session.commit()
+        self.__session.add(obj)
+        self.__session.commit()
 
     def save(self):
         '''
             commit all changes to current session.
         '''
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
-        session.commit()
+        self.__session.commit()
 
     def delete(self, obj=None):
         '''
             delete from current sesssion
         '''
-        Session = sessionmaker(bind=self.__engine)
-        session = Session()
-        session.delete(obj)
-        session.commit()
+        if obj:
+            self.__session.delete(obj)
+            self.__session.commit()
 
     def reload(self):
         '''
           reload stuff
         '''
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format
-                                      (os.environ['HBNB_MYSQL_USER'],
-                                       os.environ['HBNB_MYSQL_PWD'],
-                                       os.environ['HBNB_MYSQL_HOST'],
-                                       os.environ['HBNB_MYSQL_DB']),
-                                      pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
-
-        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        session = scoped_session(Session())
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
+        print(type(self.__session))
