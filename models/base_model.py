@@ -23,7 +23,6 @@ class BaseModel:
         '''
             Initialize public instance attributes.
         '''
-
         if (len(kwargs) == 0):
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -75,7 +74,7 @@ class BaseModel:
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         cp_dct['created_at'] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
         if '_sa_instance_state' in cp_dct:
-            del (cp_dct['_sa_instance_state'])
+            del cp_dct['_sa_instance_state']
         return (cp_dct)
 
     def delete(self):
