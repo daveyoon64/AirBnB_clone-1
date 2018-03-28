@@ -6,6 +6,7 @@ import cmd
 import json
 import shlex
 import os
+import models
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 from models.base_model import BaseModel
@@ -89,7 +90,8 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-        storage = FileStorage()
+        # storage = FileStorage()
+        storage = models.storage
         storage.reload()
         obj_dict = storage.all()
         try:
@@ -118,7 +120,8 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name = args[0]
         class_id = args[1]
-        storage = FileStorage()
+        # storage = FileStorage()
+        storage = models.storage
         storage.reload()
         obj_dict = storage.all()
         try:
@@ -140,12 +143,8 @@ class HBNBCommand(cmd.Cmd):
         '''
         args = shlex.split(args)
         obj_list = []
-        if os.environ['HBNB_TYPE_STORAGE'] == 'file':
-            storage = FileStorage()
-            storage.reload()
-        else:
-            storage = DBStorage()
-            storage.reload()
+        storage = models.storage
+        storage.reload()
         if len(args) != 0:
             try:
                 eval(args[0])
@@ -156,44 +155,14 @@ class HBNBCommand(cmd.Cmd):
         else:
             objects = storage.all()
         print(objects)
-    """
-    def do_all(self, args):
-        '''
-            Prints all string representation of all instances
-            based or not on the class name.
-        '''
-        obj_list = []
-        if os.environ['HBNB_TYPE_STORAGE'] == 'file':
-            storage = FileStorage()
-            storage.reload()
-            objects = storage.all(args)
-            try:
-                if len(args) != 0:
-                    eval(args)
-            except NameError:
-                print("** class doesn't exist **")
-                return
-            for key, val in objects.items():
-                if len(args) != 0:
-                    if type(val) is eval(args):
-                        obj_list.append(val)
-                else:
-                    obj_list.append(val)
-            print(obj_list)
-        else:
-            queries = []
-            storage = DBStorage()
-            query = storage.all(args)
-            for k, v in query.items():
-                queries.append(v)
-            print(queries)
-    """
+
     def do_update(self, args):
         '''
             Update an instance based on the class name and id
             sent as args.
         '''
-        storage = FileStorage()
+        # storage = FileStorage()
+        storage = models.storage
         storage.reload()
         args = shlex.split(args)
         if len(args) == 0:
@@ -239,7 +208,8 @@ class HBNBCommand(cmd.Cmd):
             Counts/retrieves the number of instances.
         '''
         obj_list = []
-        storage = FileStorage()
+        # storage = FileStorage()
+        storage = models.storage
         storage.reload()
         objects = storage.all()
         try:
