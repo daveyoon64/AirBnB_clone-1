@@ -2,7 +2,7 @@
 '''
     describe DBstorage
 '''
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
@@ -38,25 +38,16 @@ class DBStorage:
         '''
             query current database session for all objects depending on cls.
         '''
-        match = {}
+        match = []
         if not cls:
-            result = self.__session.query(State, City).all()
-            for element in result:
-                for obj in element:
-                    key = "{}.{}".format(type(obj), obj.id)
-                    match[key] = obj
+            result = self.__session.query(State, City)
+            for k, v in result:
+                match.append(k)
+                match.append(v)
         else:
-            if cls == 'State':
-                result = self.__session.query(State).all()
-            elif cls == 'City':
-                result = self.__ession.query(City).all()
-            elif cls == 'User':
-                result = self.__session.query(User).all()
-            elif cls == 'Place':
-                result = self.__session.query(Place).all()
+            result = self.__session.query(cls)
             for element in result:
-                key = "{}.{}".format(type(element), element.id)
-                match[key] = element
+                match.append(element)
         return match
 
     def new(self, obj):
@@ -84,4 +75,5 @@ class DBStorage:
         '''
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(Session)
+        Session_scoped = scoped_session(Session)
+        self.__session = Session_scoped()
