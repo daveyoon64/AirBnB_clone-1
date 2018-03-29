@@ -41,7 +41,8 @@ class DBStorage:
         '''
         match = {}
         if not cls:
-            result = self.__session.query(State, City).all()
+            result = self.__session.query(State, City,
+                                          Place, User, Review).all()
             for element in result:
                 for obj in element:
                     key = "{}.{}".format(type(obj), obj.id)
@@ -55,6 +56,8 @@ class DBStorage:
                 result = self.__session.query(User).all()
             elif cls == 'Place':
                 result = self.__session.query(Place).all()
+            elif cls == 'Review':
+                result = self.__session.query(Review).all()
             for element in result:
                 key = "{}.{}".format(type(element), element.id)
                 match[key] = element

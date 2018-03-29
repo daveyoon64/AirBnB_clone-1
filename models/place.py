@@ -4,8 +4,10 @@
 '''
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from models.base_model import BaseModel, Base
+from sqlalchemy.orm import relationship
 from models.city import City
 from models.user import User
+import os
 
 
 class Place(BaseModel, Base):
@@ -24,3 +26,20 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
+        reviews = relationship('Review', backref='place',
+                               cascade="delete")
+    else:
+        @property
+        def reviews(self):
+            '''
+                returns the list of Review instances with
+                place_id equals to the current Place.id
+            '''
+            match = []
+            all_reviews = models.storage.all(Review)
+            for k, v in all_reviews.items():
+                if v.place_id == self.id:
+                    match.append(v)
+            return
