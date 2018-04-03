@@ -16,7 +16,7 @@ def do_pack():
         pass
     now = datetime.now()
     ts = now.strftime("%Y%m%d%H%M%S")
-    name = "versions/web_static_{}.tar.gz".format(ts)
+    name = "versions/web_static_{}.tgz".format(ts)
     cmd = 'tar -zcvf {} web_static'.format(name)
     print("Packing web_static to {}".format(name))
     tar = local(cmd)
