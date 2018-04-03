@@ -12,9 +12,7 @@ def do_deploy(archive_path):
     """
         Distribute archive to webservers
     """
-    if not os.path.isfile(archive_path):
-        return False
-    try:
+    if os.path.isfile(archive_path):
         # put the file on the server
         filename = archive_path[archive_path.find('web_static'):]
         serverpath = "/tmp/{}".format(filename)
@@ -33,8 +31,7 @@ def do_deploy(archive_path):
 
         # delete the symlink and create a new one
         run('rm -rf /data/web_static/current')
-        run('ln -sf {} /data/web_static/current'.format(whereto))
+        run('ln -s {} /data/web_static/current'.format(whereto))
         print('New version deployed!')
         return True
-    except:
-        return False
+    return False
