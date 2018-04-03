@@ -15,7 +15,7 @@ def do_pack():
     except OSError as e:
         pass
     now = datetime.now()
-    ts = now.strftime("%Y%m%d%H%M")
+    ts = now.strftime("%Y%m%d%H%M%S")
     name = "versions/web_static_{}.tar.gz".format(ts)
     cmd = 'tar -zcvf {} web_static'.format(name)
     print("Packing web_static to {}".format(name))
