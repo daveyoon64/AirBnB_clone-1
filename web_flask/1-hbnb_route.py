@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Starts Flask web application with hbnb route"""
+"""Starts Flask web application with python route"""
 from flask import Flask
 
 app = Flask(__name__)
