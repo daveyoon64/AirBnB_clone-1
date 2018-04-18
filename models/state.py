@@ -2,6 +2,7 @@
 '''
     Implementation of the State class
 '''
+import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -26,7 +27,7 @@ class State(BaseModel, Base):
             Code for FileStorage & returns list of cities
             '''
             match = []
-            all_cities = models.storage.all(City)
+            all_cities = models.storage.all("City")
             for k, v in all_cities.items():
                 if v.state_id == self.id:
                     match.append(v)
