@@ -12,11 +12,11 @@
             <UL>
             {%- for city in cities|sort(attribute='name') %}
                 {%- if city.state_id == id  %}
-                    <LI>State: {{ id }}: <B>{{ city.name }}</B></LI>
+                    <LI>{{ id }}: <B>{{ city.name }}</B></LI>
                 {%- endif %}
             {%- endfor %}
             </UL>
-        {% else %}}
+        {% else %}
             <H1>States</H1>
             <UL>
             {%- for state in states|sort(attribute='name') %}
