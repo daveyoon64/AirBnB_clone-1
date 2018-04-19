@@ -27,7 +27,7 @@ def states_id_list(id):
             found_id = state.id
             name = state.name
     if not id:
-        return return_template('9-states.html', id=None)
+        return return_template('9-states.html')
     else:
         return render_template('9-states.html',
                                id=found_id,
