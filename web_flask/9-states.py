@@ -9,6 +9,7 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/states')
+@app.route('/states/')
 def states_list():
     """list all State objects present in DBStorage"""
     states = storage.all('State').values()
@@ -16,7 +17,7 @@ def states_list():
 
 
 @app.route('/states/<id>')
-def states_id_list(id):
+def states_id_list(id=None):
     """list all State objects present in DBStorage"""
     found_id = None
     name = None
