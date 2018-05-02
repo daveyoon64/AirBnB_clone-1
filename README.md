@@ -1,7 +1,6 @@
 # Synopsis
 
-The Airbnb clone project for which we are creating a copy of the [Airbnb](https://www.airbnb.com/).
-Only some features will be implemented and will be listed below once completed.
+The Airbnb Project is designed for Holberton students to create a full-stack project in the likes of [Airbnb](https://www.airbnb.com/). In this version, we learn how to deploy our web_static files, implement an ORM layer with SQLAlchemy, and implement Flask, a Python web framework.
 
 
 ## Features
@@ -11,9 +10,9 @@ Only some features will be implemented and will be listed below once completed.
 #### Description
 
 The Command Interpreter is used to manage the whole application's functionality from the command line, such as:
-+ Crete a new object.
++ Create a new object.
 + Retrieve an object from a file, database, etc.
-+ Execute operation on objects. e.g. Count, compute statistics, etc.
++ Execute operation on objects. e.g. count, compute statistics, etc.
 + Update object's attributes.
 + Destroy an object.
 
