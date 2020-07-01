@@ -1,6 +1,6 @@
 # Synopsis
 
-The Airbnb Project is designed for Holberton students to create a full-stack project in the likes of [Airbnb](https://www.airbnb.com/). In this version, we learn how to deploy our web_static files, implement an ORM layer with SQLAlchemy, and implement Flask, a Python web framework.
+The Airbnb Project is designed to create a full-stack project in the likes of [Airbnb](https://www.airbnb.com/). In this version, we learn how to deploy our web_static files, implement an ORM layer with SQLAlchemy, and implement Flask, a Python web framework.
 
 
 ## Features
